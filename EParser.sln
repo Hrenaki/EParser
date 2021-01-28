@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30907.101
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "EParser", "EParser\EParser.csproj", "{EE16BA5F-51D8-475F-B3AB-1DB1F85B862D}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EE16BA5F-51D8-475F-B3AB-1DB1F85B862D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{EE16BA5F-51D8-475F-B3AB-1DB1F85B862D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{EE16BA5F-51D8-475F-B3AB-1DB1F85B862D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{EE16BA5F-51D8-475F-B3AB-1DB1F85B862D}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {56CBCDD8-F676-4C17-AB13-5FFC8BE259FD}
+	EndGlobalSection
+EndGlobal
