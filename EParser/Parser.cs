@@ -16,15 +16,27 @@ namespace EParser
 
         public ExpressionParser(params string[] variables)
         {
-            this.variables = variables;
+            this.variables = variables.Select(t => "$" + t).ToArray();
         }
         public ExpressionParser()
         {
-            variables = new[] { "x", "y" };
+            variables = new[] { "$x", "$y" };
         }
-        public Func getDelegate(string expression)
+        public Func GetFunction(string expression)
         {
+            expression = prepareExpression(expression);
+            return compileFunction(expression);
+        }
+        private string prepareExpression(string expression)
+        {
+            string basis;
+            string degree;
+            int position, lhs, rhs;
+
             expression = expression.ToLower().Replace(" ", "");
+
+            for (int i = 0; i < variables.Length; i++)
+                expression = expression.Replace(variables[i], "(t[" + i + "])");
 
             expression = expression.Replace("sin", "Math.Sin")
                                     .Replace("cos", "Math.Cos")
@@ -40,15 +52,16 @@ namespace EParser
 
             while (expression.Contains("^"))
             {
-                int position = expression.IndexOf("^");
-                int lhs = position - 1, rhs = position + 1;
-                string basis = "";
-                string degree = "";
+                position = expression.IndexOf("^");
+                lhs = position - 1;
+                rhs = position + 1;
+                basis = "";
+                degree = "";
                 if (expression[position - 1] == ')')
                 {
                     while (expression[lhs] != '(')
                         lhs--;
-                    basis += expression.Substring(lhs + 1, position - 2);
+                    basis += expression.Substring(lhs + 1, position - lhs - 2);
                 }
                 else basis += expression[lhs];
 
@@ -65,14 +78,15 @@ namespace EParser
                     "Math.Pow(" + basis + ", " + degree + ")");
             }
 
+            return expression;
+        }
+        private Func compileFunction(string expression)
+        {
             CSharpCodeProvider codeProvider = new CSharpCodeProvider();
             CompilerParameters parameters = new CompilerParameters();
             parameters.GenerateInMemory = true;
             parameters.GenerateExecutable = false;
             parameters.ReferencedAssemblies.Add("System.dll");
-
-            for (int i = 0; i < variables.Length; i++)
-                expression = expression.Replace(variables[i], "t[" + i + "]");
 
             CompilerResults results = codeProvider.CompileAssemblyFromSource(parameters,
             @"
@@ -90,4 +104,3 @@ namespace EParser
         }
     }
 }
-
